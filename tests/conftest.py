@@ -8,7 +8,7 @@ def get_chrome_options():
     options = chrome_options()
     options.add_argument('chrome')  # Use headlees to use browser without UI
     options.add_argument('--start-maximized')
-    options.add_argument('--window-size=1000,1024')
+    options.add_argument('--window-size=1650,1024')
     return options
 
 
@@ -19,7 +19,7 @@ def get_webdriver(get_chrome_options):
     return driver
 
 
-@pytest.fixture
+@pytest.fixture(scope='function')
 def setup(request, get_webdriver):
     driver = get_webdriver
     url = 'https://www.macys.com/'
@@ -27,4 +27,4 @@ def setup(request, get_webdriver):
         request.cls.driver = driver
     driver.get(url)
     yield driver
-    driver.quite()
+    driver.quit()
